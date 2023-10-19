@@ -23,7 +23,7 @@ char *infinite_add(char *n1, char *n2, char *r, int size_r)
 	while (i >= 0 || j >= 0 || carry)
 	{
 		int digit1 = (i >= 0) ? n1[i] - '0' : 0;
-	        int digit2 = (j >= 0) ? n2[j] - '0' : 0;
+		int digit2 = (j >= 0) ? n2[j] - '0' : 0;
 
 		int sum = digit1 + digit2 + carry;
 
@@ -34,7 +34,7 @@ char *infinite_add(char *n1, char *n2, char *r, int size_r)
 		}
 		else
 		{
-			return 0;
+			return (0);
 		}
 
 		carry = sum / 10;
@@ -46,7 +46,7 @@ char *infinite_add(char *n1, char *n2, char *r, int size_r)
 	r[k] = '\0';
 	_reverse(r);
 
-	return r;
+	return (r);
 }
 
 /**
@@ -65,7 +65,7 @@ int _strlen(char *str)
 		str++;
 	}
 
-	return len;
+	return (len);
 }
 
 /**
