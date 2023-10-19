@@ -1,88 +1,55 @@
 #include "main.h"
+#include <stdio.h>
 
 /**
- * infinite_add - Adds two numbers
- * @n1: First number as a string
- * @n2: Second number as a string
- * @r: Buffer to store the result
- * @size_r: Size of the buffer
- * Return: Pointer to the result, or 0 if the result cannot be stored
+ * infinite_add - adds two numbers
+ * @n1: number one.
+ * @n2: number two.
+ * @r: buffer that the function will use to store the result.
+ * @size_r: buffer size:
+ * Return: the pointer to dest.
  */
 
 char *infinite_add(char *n1, char *n2, char *r, int size_r)
 {
-	int len1 = _strlen(n1);
-	int len2 = _strlen(n2);
+	int c1 = 0, c2 = 0, op, bg, dr1, dr2, add = 0;
 
-	int i = len1 - 1;
-	int j = len2 - 1;
-
-	int carry = 0;
-	int k = 0;
-
-	while (i >= 0 || j >= 0 || carry)
+	while (*(n1 + c1) != '\0')
+		c1++;
+	while (*(n2 + c2) != '\0')
+		c2++;
+	if (c1 >= c2)
+		bg = c1;
+	else
+		bg = c2;
+	if (size_r <= bg + 1)
+		return (0);
+	r[bg + 1] = '\0';
+	c1--, c2--, size_r--;
+	dr1 = *(n1 + c1) - 48, dr2 = *(n2 + c2) - 48;
+	while (bg >= 0)
 	{
-		int digit1 = (i >= 0) ? n1[i] - '0' : 0;
-		int digit2 = (j >= 0) ? n2[j] - '0' : 0;
-
-		int sum = digit1 + digit2 + carry;
-
-		if (k < size_r - 1)
-		{
-			r[k] = (sum % 10) + '0';
-			k++;
-		}
+		op = dr1 + dr2 + add;
+		if (op >= 10)
+			add = op / 10;
 		else
-		{
-			return (0);
-		}
-
-		carry = sum / 10;
-
-		i--;
-		j--;
+			add = 0;
+		if (op > 0)
+			*(r + bg) = (op % 10) + 48;
+		else
+			*(r + bg) = '0';
+		if (c1 > 0)
+			c1--, dr1 = *(n1 + c1) - 48;
+		else
+			dr1 = 0;
+		if (c2 > 0)
+			c2--, dr2 = *(n2 + c2) - 48;
+		else
+			dr2 = 0;
+		bg--, size_r--;
 	}
-
-	r[k] = '\0';
-	_reverse(r);
-
-	return (r);
-}
-
-/**
- * _strlen - Calculate the length of a string
- * @str: The input string
- * Return: Length of the string
- */
-
-int _strlen(char *str)
-{
-	int len = 0;
-
-	while (*str)
-	{
-		len++;
-		str++;
-	}
-
-	return (len);
-}
-
-/**
- * _reverse - Reverse a string
- * @str: The input string
- */
-
-void _reverse(char *str)
-{
-	int len = _strlen(str);
-	int i, j;
-	char temp;
-
-	for (i = 0, j = len - 1; i < j; i++, j--)
-	{
-		temp = str[i];
-		str[i] = str[j];
-		str[j] = temp;
-	}
+	if (*(r) == '0')
+		return (r + 1);
+	else
+		return (r);
 }
