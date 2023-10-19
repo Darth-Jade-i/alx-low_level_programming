@@ -6,37 +6,83 @@
  * @n2: Second number as a string
  * @r: Buffer to store the result
  * @size_r: Size of the buffer
- * Return: Pointer to the result,
+ * Return: Pointer to the result, or 0 if the result cannot be stored
  */
+
 char *infinite_add(char *n1, char *n2, char *r, int size_r)
 {
-	int i = _strlen(n1) - 1;
-	int j = _strlen(n2) - 1;
-	int k = size_r - 2;
+	int len1 = _strlen(n1);
+	int len2 = _strlen(n2);
 
-	r[size_r - 1] = '\0';
+	int i = len1 - 1;
+	int j = len2 - 1;
 
 	int carry = 0;
+	int k = 0;
 
 	while (i >= 0 || j >= 0 || carry)
 	{
-		int sum = carry;
+		int digit1 = (i >= 0) ? n1[i] - '0' : 0;
+	        int digit2 = (j >= 0) ? n2[j] - '0' : 0;
 
-		if (i >= 0)
-			sum += n1[i] - '0';
+		int sum = digit1 + digit2 + carry;
 
-		if (j >= 0)
-			sum += n2[j] - '0';
+		if (k < size_r - 1)
+		{
+			r[k] = (sum % 10) + '0';
+			k++;
+		}
+		else
+		{
+			return 0;
+		}
 
 		carry = sum / 10;
-		r[k] = (sum % 10) + '0';
 
 		i--;
 		j--;
-		k--;
 	}
-	if (k < 0 && (i >= 0 || j >= 0 || carry))
-		return (0);
 
-	return (r + k + 1);
+	r[k] = '\0';
+	_reverse(r);
+
+	return r;
+}
+
+/**
+ * _strlen - Calculate the length of a string
+ * @str: The input string
+ * Return: Length of the string
+ */
+
+int _strlen(char *str)
+{
+	int len = 0;
+
+	while (*str)
+	{
+		len++;
+		str++;
+	}
+
+	return len;
+}
+
+/**
+ * _reverse - Reverse a string
+ * @str: The input string
+ */
+
+void _reverse(char *str)
+{
+	int len = _strlen(str);
+	int i, j;
+	char temp;
+
+	for (i = 0, j = len - 1; i < j; i++, j--)
+	{
+		temp = str[i];
+		str[i] = str[j];
+		str[j] = temp;
+	}
 }
