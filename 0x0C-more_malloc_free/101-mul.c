@@ -1,66 +1,86 @@
-#include <stdio.h>
+#include "main.h"
 #include <stdlib.h>
 
 /**
- * is_numeric - Check if a string contains only digits
- * @str: The input string to check
+ * check_digit - check if all elements of
+ * an array are digits
+ * @s: the array to be checked
  *
- * Return: 1 if all characters are digits, 0 otherwise
+ * Return: 0 if the elements are all digits
+ *	   1 if otherwise
  */
-
-int is_numeric(const char *str)
+int check_digit(char *s)
 {
-	while (*str)
-	{
-		if (*str < '0' || *str > '9')
-		{
-			return (0); /* Not a digit */
-		}
+	unsigned int i;
 
-		str++;
+	for (i = 0; s[i]; i++)
+	{
+		if (!(s[i] >= '0' && s[i] <= '9'))
+			return (-1);
 	}
 
-	return (1); /* All characters are digits */
+	return (0);
 }
-
 /**
- * multiply - Multiply two positive numbers
- * @num1: The first positive number
- * @num2: The second positive number
+ * _atoi - convert a string to an integer
+ * @s: the string
  *
- * Return: The product of num1 and num2
+ * Return: the integer
  */
-
-long long multiply(long long num1, long long num2)
+int _atoi(char *s)
 {
-	return (num1 * num2);
+	unsigned int i, number = 0;
+
+	for (i = 0; s[i]; i++)
+		number = number * 10 + (s[i] - '0');
+
+	return (number);
 }
-
-int main(int argc, char *argv[])
+/**
+ * print_number - Prints an integer.
+ * @n: The integer to be printed.
+ */
+void print_number(unsigned int n)
 {
-	if (argc != 3)
+	if ((n / 10) > 0)
+		print_number(n / 10);
+
+	_putchar((n % 10) + '0');
+}
+/**
+ * main - multiply 2 positive numbers
+ * @ac: argument count
+ * @av: array of arguments
+ *
+ * Return: 0
+ */
+int main(int ac, char **av)
+{
+	int a = 0, b = 0;
+	unsigned int num1, num2, mul;
+
+	if (ac == 3)
 	{
-		printf("Error\n");
-		return (98);
+		a = check_digit(av[1]);
+		b = check_digit(av[2]);
+	}
+	if (ac != 3 || a != 0 || b != 0)
+	{
+		_putchar('E');
+		_putchar('r');
+		_putchar('r');
+		_putchar('o');
+		_putchar('r');
+		_putchar('\n');
+		exit(98);
 	}
 
-	if (!is_numeric(argv[1]) || !is_numeric(argv[2]))
-	{
-		printf("Error\n");
-		return (98);
-	}
-	long long num1 = atoll(argv[1]);
-	long long num2 = atoll(argv[2]);
+	num1 = _atoi(av[1]);
+	num2 = _atoi(av[2]);
+	mul = num1 * num2;
 
-	if (num1 <= 0 || num2 <= 0)
-	{
-		printf("Error\n");
-		return (98);
-	}
-
-	long long result = multiply(num1, num2);
-
-	printf("%lld\n", result);
+	print_number(mul);
+	_putchar('\n');
 
 	return (0);
 }
