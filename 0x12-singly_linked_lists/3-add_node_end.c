@@ -1,44 +1,46 @@
 #include "lists.h"
-
 /**
- * add_node_end - Add a new node at the end of a list.
- * @head: Address of the first node of a list.
- * @str: Address of the string to insert into the new node.
- * Return: Address of the new node.
- **/
-
+ * add_node_end - add a new node at the end of a list_t list
+ * @head: the pointer to the pointer pointing to the first node
+ * @str: the value of the new node
+ * Return: pointer to the new node
+ */
 list_t *add_node_end(list_t **head, const char *str)
 {
-	list_t *contA, *contB;
-	unsigned int length = 0;
+	char *dup;
+	int len;
+	list_t *new;
+	list_t *traverse;
 
-	if (str == NULL)
-		return (NULL);
+	new = malloc(sizeof(list_t));
 
-	contA = malloc(sizeof(list_t));
-	if (contA == NULL)
-		return (NULL);
-
-	contA->str = strdup(str);
-	if (contA->str == NULL)
+	if (new == NULL)
 	{
-		free(contA);
 		return (NULL);
 	}
-	while (str[length])
-		length++;
-	contA->len = length;
-	contA->next = NULL;
-
+	dup = strdup(str);
+	if (dup == NULL)
+	{
+		free(new);
+		return (NULL);
+	}
+	for (len = 0; str[len];)
+	{
+		len++;
+	}
+	new->str = dup;
+	new->len = len;
+	new->next = NULL;
 	if (*head == NULL)
 	{
-		*head = contA;
-		return (contA);
+		*head = new;
 	}
-
-	temp2 = *head;
-	while (contB->next)
-		contB = contB->next;
-	contB->next = contA;
-	return (contA);
+	else
+	{
+		traverse = *head;
+		while (traverse->next != NULL)
+			traverse = traverse->next;
+		traverse->next = new;
+	}
+	return (new);
 }
