@@ -17,10 +17,8 @@ int is_digit(char *s)
 		if (s[i] < '0' || s[i] > '9')
 			return (0);
 		i++;
-
 	}
 	return (1);
-
 }
 
 /**
@@ -39,7 +37,6 @@ int _strlen(char *s)
 
 	}
 	return (i);
-
 }
 
 /**
@@ -56,7 +53,6 @@ void errors(void)
  * main - multiplies two positive numbers
  * @argc: number of arguments
  * @argv: array of arguments
- *
  * Return: always 0 (Success)
  */
 int main(int argc, char *argv[])
@@ -88,7 +84,6 @@ int main(int argc, char *argv[])
 		}
 		if (carry > 0)
 			result[len1 + len2 + 1] += carry;
-
 	}
 	for (i = 0; i < len - 1; i++)
 	{
@@ -96,12 +91,10 @@ int main(int argc, char *argv[])
 			a = 1;
 		if (a)
 			_putchar(result[i] + '0');
-
 	}
 	if (!a)
 		_putchar('0');
 	_putchar('\n');
 	free(result);
 	return (0);
-
 }
